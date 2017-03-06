@@ -30,6 +30,6 @@
         }
     },
     "extra": {
-        "bootstrap": "DevGroup\\GridUtils\\GridModule"
+        "bootstrap": "DevGroup\\GridUtils\\ExtensionBootstrap"
     }
 }
