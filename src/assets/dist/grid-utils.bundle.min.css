@@ -1,0 +1,28 @@
+.highlight-changes {
+  background-color: #deda9e !important;
+  transition: background-color .5s !important; }
+
+.highlight-changes_ok {
+  background-color: rgba(60, 60, 221, 0) !important;
+  transition: background-color .5s !important; }
+
+.grid-view table.table {
+  margin: 0;
+  background-color: #fff; }
+  .grid-view table.table td {
+    border: 1px solid #ddd;
+    padding: 0;
+    white-space: nowrap; }
+    .grid-view table.table td input {
+      display: block;
+      border: 0;
+      padding: 4px;
+      width: 100%;
+      background-color: transparent; }
+      .grid-view table.table td input:focus {
+        outline: 1px solid #00a65a; }
+    .grid-view table.table td.has-error input {
+      border: 1px solid #a94442;
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); }
+
+/*# sourceMappingURL=grid-utils.bundle.min.css.map*/
