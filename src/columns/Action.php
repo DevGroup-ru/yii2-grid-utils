@@ -21,12 +21,16 @@ class Action extends Column
 
     public $appendReturnUrl = true;
 
-    public $buttonSizeClass = 'btn-sm';
+    public $buttonSizeClass = 'btn-xs';
 
     /**
      * @var array Params to append to every button's URL if button doesn't redefine it.
      */
     public $appendUrlParams = [];
+
+    public $contentOptions = [
+        'class' => 'grid-view__action-column'
+    ];
 
     public function init()
     {
@@ -108,7 +112,7 @@ class Action extends Column
      */
     protected function renderDataCellContent($model, $key, $index)
     {
-        $data = Html::beginTag('div', ['class' => 'btn-group']);
+        $data = Html::beginTag('div', ['class' => 'btn-group grid-utils']);
         if ($this->buttons instanceof \Closure) {
             $buttons = call_user_func($this->buttons, $model, $key, $index, $this);
         } else {

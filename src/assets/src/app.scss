@@ -27,3 +27,12 @@
     }
   }
 }
+
+.grid-view__action-column {
+  &, .btn-group {
+    white-space: nowrap;
+  }
+  .btn-group {
+    display: flex;
+  }
+}

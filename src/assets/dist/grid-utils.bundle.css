@@ -25,4 +25,10 @@
       border: 1px solid #a94442;
       box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); }
 
+.grid-view__action-column, .grid-view__action-column .btn-group {
+  white-space: nowrap; }
+
+.grid-view__action-column .btn-group {
+  display: flex; }
+
 /*# sourceMappingURL=grid-utils.bundle.css.map*/
