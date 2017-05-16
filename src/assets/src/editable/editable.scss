@@ -5,6 +5,11 @@
   background-color: rgb(222, 218, 158) !important;
   transition: background-color .5s !important;
 }
+.highlight-changes_error {
+  background-color: rgb(210, 0, 0) !important;
+  transition: all .5s !important;
+  color: #fff;
+}
 .highlight-changes_ok {
   background-color: rgba(60, 60, 221, 0) !important;
   transition: background-color .5s !important;
