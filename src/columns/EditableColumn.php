@@ -25,15 +25,42 @@ class EditableColumn extends DataColumn
      */
     protected function renderDataCellContent($model, $key, $index)
     {
+        if (is_object($model)) {
+            $options = [
+                'class' => $this->cssClass,
+                'data-route' => Url::to($this->route),
+                'data-id' => $model->{$this->idAttribute},
+                'data-attribute' => $this->attribute,
+            ];
+            if ($this->dropDownItems !== null) {
+                return Html::activeDropDownList($model, $this->attribute, $this->dropDownItems, $options);
+            }
+
+            return Html::activeTextInput($model, $this->attribute, $options);
+        }
+
         $options = [
             'class' => $this->cssClass,
             'data-route' => Url::to($this->route),
-            'data-id' => $model->{$this->idAttribute},
+            'data-id' => $model[$this->idAttribute],
             'data-attribute' => $this->attribute,
         ];
+        $fieldName = "GridView[$this->attribute]";
+
         if ($this->dropDownItems !== null) {
-            return Html::activeDropDownList($model, $this->attribute, $this->dropDownItems, $options);
+            return Html::dropDownList($fieldName, $model[$this->attribute], $this->dropDownItems, $options);
         }
-        return Html::activeTextInput($model, $this->attribute, $options);
+
+        return Html::textInput(
+            $fieldName,
+            $model[$this->attribute],
+            [
+                'class' => $this->cssClass,
+                'data-route' => Url::to($this->route),
+                'data-id' => $model[$this->idAttribute],
+                'data-attribute' => $this->attribute,
+            ]
+        );
+
     }
 }
