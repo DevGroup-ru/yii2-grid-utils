@@ -84,9 +84,10 @@ class Action extends Column
             $params = $key;
         } else {
             if (is_null($keyParam) === false) {
-                $params = [$keyParam => (string)$key];
+                $params = [$keyParam => (string)$model[$keyParam]];
             }
         }
+
         $params[0] = $action;
         foreach ($attrs as $attrName) {
             if ($attrName === 'model') {
