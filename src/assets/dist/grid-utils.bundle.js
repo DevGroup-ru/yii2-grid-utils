@@ -117,6 +117,9 @@ var Editable = function () {
             setTimeout(function () {
               $obj.removeClass('highlight-changes').removeClass('highlight-changes_ok');
             }, 500);
+            if (window.gridUtilsEditableSuccessCallback) {
+              window.gridUtilsEditableSuccessCallback();
+            }
           },
           error: function error() {
             $obj.addClass('highlight-changes_error');

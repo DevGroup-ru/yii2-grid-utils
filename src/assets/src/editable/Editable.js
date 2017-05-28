@@ -33,6 +33,9 @@ class Editable {
               .removeClass('highlight-changes')
               .removeClass('highlight-changes_ok');
           }, 500);
+          if (window.gridUtilsEditableSuccessCallback) {
+            window.gridUtilsEditableSuccessCallback();
+          }
         },
         error() {
           $obj.addClass('highlight-changes_error');
