@@ -10,7 +10,7 @@ class GridUtils {
     const userSettings = window.GridUtilsSettings || {};
     const settings = {
       editableOptions: {
-        selector: '.grid-utils'
+        selector: '.grid-input'
       }
     };
     Object.keys(userSettings).forEach(key => {

@@ -94,14 +94,37 @@ var Editable = function () {
     key: 'bindListeners',
     value: function bindListeners() {
       $(document).on('change', this.settings.selector, function () {
-        var $obj = $(this).hasClass('grid-input') ? $(this) : $(this).parent().find('.select2-selection');
+        var $obj = $(this);
         $obj.addClass('highlight-changes');
-        setTimeout(function () {
-          $obj.addClass('highlight-changes_ok');
-          setTimeout(function () {
-            $obj.removeClass('highlight-changes').removeClass('highlight-changes_ok');
-          }, 500);
-        }, 1000);
+        var route = $obj.data('route');
+        var id = $obj.data('id');
+        var attribute = $obj.data('attribute');
+        var value = $obj.val();
+        console.log($obj);
+        $.ajax({
+          url: route,
+          method: 'post',
+          dataType: 'json',
+          cache: false,
+          data: {
+            id: id,
+            attribute: attribute,
+            value: value,
+            _csrf: $('meta[name="csrf-token"]').attr('content')
+          },
+          success: function success() {
+            $obj.addClass('highlight-changes_ok');
+            setTimeout(function () {
+              $obj.removeClass('highlight-changes').removeClass('highlight-changes_ok');
+            }, 500);
+          },
+          error: function error() {
+            $obj.addClass('highlight-changes_error');
+            setTimeout(function () {
+              $obj.removeClass('highlight-changes').removeClass('highlight-changes_error');
+            }, 1500);
+          }
+        });
       });
     }
   }]);
@@ -149,7 +172,7 @@ var GridUtils = function () {
       var userSettings = window.GridUtilsSettings || {};
       var settings = {
         editableOptions: {
-          selector: '.grid-utils'
+          selector: '.grid-input'
         }
       };
       Object.keys(userSettings).forEach(function (key) {

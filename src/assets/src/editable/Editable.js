@@ -7,17 +7,42 @@ class Editable {
 
   bindListeners() {
     $(document).on('change', this.settings.selector, function() {
-      const $obj = $(this).hasClass('grid-input') ? $(this) : $(this).parent().find('.select2-selection');
+      const $obj = $(this);
       $obj
         .addClass('highlight-changes');
-      setTimeout(() => {
-        $obj.addClass('highlight-changes_ok');
-        setTimeout(() => {
-          $obj
-            .removeClass('highlight-changes')
-            .removeClass('highlight-changes_ok');
-        }, 500);
-      }, 1000);
+      const route = $obj.data('route');
+      const id = $obj.data('id');
+      const attribute = $obj.data('attribute');
+      const value = $obj.val();
+      console.log($obj);
+      $.ajax({
+        url: route,
+        method: 'post',
+        dataType: 'json',
+        cache: false,
+        data: {
+          id,
+          attribute,
+          value,
+          _csrf: $('meta[name="csrf-token"]').attr('content')
+        },
+        success() {
+          $obj.addClass('highlight-changes_ok');
+          setTimeout(() => {
+            $obj
+              .removeClass('highlight-changes')
+              .removeClass('highlight-changes_ok');
+          }, 500);
+        },
+        error() {
+          $obj.addClass('highlight-changes_error');
+          setTimeout(() => {
+            $obj
+              .removeClass('highlight-changes')
+              .removeClass('highlight-changes_error');
+          }, 1500);
+        }
+      });
     });
   }
 }
