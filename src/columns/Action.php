@@ -88,6 +88,9 @@ class Action extends Column
             }
         }
 
+        if ($action instanceof \Closure) {
+            return $action($model, $key, $urlAppend, $keyParam, $attrs);
+        }
         $params[0] = $action;
         foreach ($attrs as $attrName) {
             if ($attrName === 'model') {
