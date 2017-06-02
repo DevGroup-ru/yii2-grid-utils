@@ -6,6 +6,7 @@ class Editable {
   }
 
   bindListeners() {
+    const that = this;
     $(document).on('change', this.settings.selector, function() {
       const $obj = $(this);
       $obj
@@ -26,27 +27,39 @@ class Editable {
           value,
           _csrf: $('meta[name="csrf-token"]').attr('content')
         },
-        success() {
-          $obj.addClass('highlight-changes_ok');
-          setTimeout(() => {
-            $obj
-              .removeClass('highlight-changes')
-              .removeClass('highlight-changes_ok');
-          }, 500);
-          if (window.gridUtilsEditableSuccessCallback) {
-            window.gridUtilsEditableSuccessCallback();
+        success(result) {
+          if (result) {
+            that.showOk($obj);
+          } else {
+            that.showError($obj);
           }
         },
         error() {
-          $obj.addClass('highlight-changes_error');
-          setTimeout(() => {
-            $obj
-              .removeClass('highlight-changes')
-              .removeClass('highlight-changes_error');
-          }, 1500);
+          that.showError($obj);
         }
       });
     });
+  }
+
+  showOk($obj) {
+    $obj.addClass('highlight-changes_ok');
+    setTimeout(() => {
+      $obj
+        .removeClass('highlight-changes')
+        .removeClass('highlight-changes_ok');
+    }, 500);
+    if (window.gridUtilsEditableSuccessCallback) {
+      window.gridUtilsEditableSuccessCallback();
+    }
+  }
+
+  showError($obj) {
+    $obj.addClass('highlight-changes_error');
+    setTimeout(() => {
+      $obj
+        .removeClass('highlight-changes')
+        .removeClass('highlight-changes_error');
+    }, 1500);
   }
 }
 

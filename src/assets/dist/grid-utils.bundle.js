@@ -93,6 +93,7 @@ var Editable = function () {
   _createClass(Editable, [{
     key: 'bindListeners',
     value: function bindListeners() {
+      var that = this;
       $(document).on('change', this.settings.selector, function () {
         var $obj = $(this);
         $obj.addClass('highlight-changes');
@@ -112,23 +113,37 @@ var Editable = function () {
             value: value,
             _csrf: $('meta[name="csrf-token"]').attr('content')
           },
-          success: function success() {
-            $obj.addClass('highlight-changes_ok');
-            setTimeout(function () {
-              $obj.removeClass('highlight-changes').removeClass('highlight-changes_ok');
-            }, 500);
-            if (window.gridUtilsEditableSuccessCallback) {
-              window.gridUtilsEditableSuccessCallback();
+          success: function success(result) {
+            if (result) {
+              that.showOk($obj);
+            } else {
+              that.showError($obj);
             }
           },
           error: function error() {
-            $obj.addClass('highlight-changes_error');
-            setTimeout(function () {
-              $obj.removeClass('highlight-changes').removeClass('highlight-changes_error');
-            }, 1500);
+            that.showError($obj);
           }
         });
       });
+    }
+  }, {
+    key: 'showOk',
+    value: function showOk($obj) {
+      $obj.addClass('highlight-changes_ok');
+      setTimeout(function () {
+        $obj.removeClass('highlight-changes').removeClass('highlight-changes_ok');
+      }, 500);
+      if (window.gridUtilsEditableSuccessCallback) {
+        window.gridUtilsEditableSuccessCallback();
+      }
+    }
+  }, {
+    key: 'showError',
+    value: function showError($obj) {
+      $obj.addClass('highlight-changes_error');
+      setTimeout(function () {
+        $obj.removeClass('highlight-changes').removeClass('highlight-changes_error');
+      }, 1500);
     }
   }]);
 
