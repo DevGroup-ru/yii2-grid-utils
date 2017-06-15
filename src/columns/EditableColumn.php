@@ -25,11 +25,18 @@ class EditableColumn extends DataColumn
      */
     protected function renderDataCellContent($model, $key, $index)
     {
+        $id = $this->idAttribute instanceof \Closure
+            ? call_user_func_array($this->idAttribute, [$model, $key, $index])
+            : $model[$this->idAttribute];
+        $url = $this->route instanceof \Closure
+            ? call_user_func_array($this->route, [$model, $key, $index])
+            : Url::to($this->route);
+
         if (is_object($model)) {
             $options = [
                 'class' => $this->cssClass,
-                'data-route' => Url::to($this->route),
-                'data-id' => $model->{$this->idAttribute},
+                'data-route' => $url,
+                'data-id' => $id,
                 'data-attribute' => $this->attribute,
             ];
             if ($this->dropDownItems !== null) {
@@ -41,8 +48,8 @@ class EditableColumn extends DataColumn
 
         $options = [
             'class' => $this->cssClass,
-            'data-route' => Url::to($this->route),
-            'data-id' => $model[$this->idAttribute],
+            'data-route' => $url,
+            'data-id' => $id,
             'data-attribute' => $this->attribute,
         ];
         $fieldName = "GridView[$this->attribute]";
@@ -56,8 +63,8 @@ class EditableColumn extends DataColumn
             $model[$this->attribute],
             [
                 'class' => $this->cssClass,
-                'data-route' => Url::to($this->route),
-                'data-id' => $model[$this->idAttribute],
+                'data-route' => $url,
+                'data-id' => $id,
                 'data-attribute' => $this->attribute,
             ]
         );
