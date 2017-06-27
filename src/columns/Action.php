@@ -83,10 +83,12 @@ class Action extends Column
         if (is_array($key)) {
             $params = $key;
         } else {
-            if (is_null($keyParam) === false && array_key_exists($keyParam, $model)) {
+            
+            if (is_null($keyParam) === false && isset($model[$keyParam])) {
                 $params = [$keyParam => (string)$model[$keyParam]];
             }
         }
+
 
         if ($action instanceof \Closure) {
             return $action($model, $key, $urlAppend, $keyParam, $attrs);
